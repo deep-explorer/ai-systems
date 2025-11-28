@@ -15,16 +15,27 @@ PG_DSN = {
   "port": os.getenv("PG_PORT"),
 }
 
-def load_text_files_from_folder(folder: str):
+def load_text_files_recursively(root_folder: str):
+  valid_exts = {".txt", ".md", ".html", ".json", ".yaml"}
   docs = []
-  for fname in os.listdir(folder):
-    if not fname.endswith((".txt", ".md")):
-      continue
 
-    path = os.path.join(folder, fname)
-    with open(path, 'r', encoding='utf-8') as f:
-      text = f.read()
-    docs.append((fname, clean_text(text)))
+  for root, _, files in os.walk(root_folder):
+    for fname in files:
+      ext = os.path.splitext(fname)[1].lower()
+      if ext not in valid_exts:
+        continue
+      path = os.path.join(root, fname)
+
+      try:
+        with open(path, 'r', encoding='utf-8', errors="ignore") as f:
+          raw_text = f.read()
+      except Exception as e:
+        print(f"Skipping file {path} due to read error: {e}")
+        continue
+
+      cleaned = clean_text(raw_text)
+      relative_path = os.path.relpath(path, root_folder)
+      docs.append((relative_path, cleaned))
 
   return docs
 
@@ -33,8 +44,19 @@ def clean_text(text: str) -> str:
   text = text.replace('\u00a0', ' ')
   
   lines = [line.strip() for line in text.split('\n')]
-  lines = [l for l in lines if l]
-  return '\n'.join(lines)
+  normalized = []
+  empty_count = 0
+
+  for line in lines:
+      if line == "":
+          empty_count += 1
+          if empty_count > 1:
+              continue
+      else:
+          empty_count = 0
+      normalized.append(line)
+
+  return "\n".join(normalized)
 
 
 def insert_documents(conn, docs):
@@ -51,6 +73,8 @@ def insert_documents(conn, docs):
 
 if __name__ == "__main__":
   conn = psycopg2.connect(**PG_DSN)
-  docs = load_text_files_from_folder("./data")
+
+  print("Loading documents recursively...")
+  docs = load_text_files_recursively("../datasets/k8s")
   doc_rows = insert_documents(conn, docs)
   print("Inserted docs: ", doc_rows)
