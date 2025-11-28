@@ -190,6 +190,14 @@ This is where backend engineering meets AI capabilities.
 
 ---
 
+## Datasets
+
+This repository includes several public documentation datasets under
+the `/datasets` directory. Each dataset preserves its original license
+and includes an ATTRIBUTION file describing the source, license, and
+any modifications.
+
+
 ## 🗺️ Roadmap (High-Level)
 
 * [x] RAG foundation (ingestion → chunking → embeddings)
