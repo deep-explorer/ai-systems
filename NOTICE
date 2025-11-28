@@ -1,0 +1,17 @@
+This project includes third-party documentation and text datasets 
+that are licensed separately from the project's source code.
+
+Third-party datasets are located under the /datasets directory and 
+retain their original licenses and attribution requirements.
+
+Kubernetes Documentation Dataset
+--------------------------------
+Location: /datasets/k8s
+Source: https://github.com/kubernetes/website
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+Copyright: The Kubernetes Authors
+Modifications: Files may have been reformatted, chunked, cleaned, or
+restructured for dataset use.
+
+All other included datasets will be documented in this NOTICE file with
+their corresponding attribution and licensing details.

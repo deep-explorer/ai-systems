@@ -1,0 +1,21 @@
+Kubernetes Documentation Dataset
+--------------------------------
+
+This dataset consists of markdown and HTML files originating from the 
+Kubernetes Documentation Project:
+
+Repository: https://github.com/kubernetes/website
+Website: https://kubernetes.io/docs/
+
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License text: https://creativecommons.org/licenses/by/4.0/
+
+Copyright: The Kubernetes Authors
+
+Modifications by Matthew R Orozco:
+- Folder restructuring
+- Cleaning and formatting
+- Text extraction for dataset preparation
+- (Optional: list other modifications)
+
+This attribution is provided in compliance with CC BY 4.0 Section 3(a).
